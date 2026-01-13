@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>10.0.19041.1</SupportedOSPlatformVersion>
+	<BaseOutputPath>..\bin</BaseOutputPath>
+	<Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+	<ApplicationIcon>applicationIcon.ico</ApplicationIcon>
+	<Description>BloodReg</Description>
+	<Copyright>Copyright © 2026 赵杨磊.All Rights Reserved.</Copyright>
+	<AssemblyVersion>1.0.0</AssemblyVersion>
+	<FileVersion>1.0.0</FileVersion>
+   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="EleCho.WpfSuite" Version="0.10.20" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="SqlSugarCoreNoDrive.Aot" Version="5.1.4.186" />
+    <PackageReference Include="WPF-UI" Version="4.2.0" />
+    <PackageReference Include="WPF-UI.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\.net-48x48.png" />
+    <Resource Include="Assets\applicationIcon.png" />
+    <Resource Include="Assets\background.jpg" />
+    <Resource Include="Assets\databaseEmpty.png" />
+    <Resource Include="Assets\gplv3-127x51.png" />
+    <Resource Include="Assets\Internationalstudent.png" />
+    <Resource Include="Assets\outsidepeople.png" />
+    <Resource Include="Assets\student.png" />
+    <Resource Include="Assets\teacher.png" />
+    <Resource Include="Assets\wpfui-48x48.png" />
+  </ItemGroup>
+
+</Project>

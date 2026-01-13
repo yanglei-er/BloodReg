@@ -1,0 +1,119 @@
+﻿using BloodReg.Helpers;
+using BloodReg.Services;
+using BloodReg.Services.Contracts;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using SqlSugar;
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Windows;
+using System.Windows.Threading;
+using Wpf.Ui;
+using Wpf.Ui.DependencyInjection;
+using Yitter.IdGenerator;
+
+namespace BloodReg
+{
+    public partial class App : Application
+    {
+        private Mutex? mutex;
+        private static readonly IHost _host = Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration(c =>
+            {
+                c.SetBasePath(AppContext.BaseDirectory);
+            })
+            .ConfigureServices(
+                (context, services) =>
+                {
+                    services.AddNavigationViewPageProvider();
+
+                    // App Host
+                    services.AddHostedService<ApplicationHostService>();
+
+                    //Database
+                    services.AddScoped<ISqlSugarClient>(s =>
+                    {
+                        //Scoped用SqlSugarClient 
+                        SqlSugarClient sqlSugar = new(new ConnectionConfig()
+                        {
+                            DbType = SqlSugar.DbType.Sqlite,
+                            ConnectionString = "DataSource=database.db",
+                            IsAutoCloseConnection = true,
+                        });
+                        return sqlSugar;
+                    });
+
+                    services.AddSingleton<IContentDialogService, ContentDialogService>();
+                    services.AddSingleton<ISnackbarService, SnackbarService>();
+                    services.AddSingleton<INavigationService, NavigationService>();
+                    services.AddSingleton<WindowsProviderService>();
+                    services.AddSingleton<IWindow, Views.MainWindow>();
+                    services.AddSingleton<ViewModels.MainWindowViewModel>();
+
+                    // Views and ViewModels
+                    services.AddSingleton<Views.Pages.Home>();
+                    services.AddSingleton<ViewModels.HomeViewModel>();
+                    services.AddSingleton<Views.Pages.Student>();
+                    services.AddSingleton<ViewModels.StudentViewModel>();
+                    services.AddSingleton<Views.Pages.Teacher>();
+                    services.AddSingleton<ViewModels.TeacherViewModel>();
+                    services.AddSingleton<Views.Pages.InternationalStudent>();
+                    services.AddSingleton<ViewModels.InternationalStudentViewModel>();
+                    services.AddSingleton<Views.Pages.OutsidePeople>();
+                    services.AddSingleton<ViewModels.OutsidePeopleViewModel>();
+                    services.AddSingleton<Views.Pages.Settings>();
+                    services.AddSingleton<ViewModels.SettingsViewModel>();
+                }
+            ).Build();
+
+        public static T? GetService<T>()
+        where T : class
+        {
+            return _host.Services.GetService(typeof(T)) as T;
+        }
+
+        public static T GetRequiredService<T>()
+        where T : class
+        {
+            return _host.Services.GetRequiredService<T>();
+        }
+
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
+            mutex = new Mutex(true, "BloodReg", out bool aIsNewInstance);
+            if (aIsNewInstance)
+            {
+                //IdGenerator全局初始化
+                YitIdHelper.SetIdGenerator(new((ushort)RandomNumberGenerator.GetInt32(60)));
+                _host.Start();
+                mutex.ReleaseMutex();
+            }
+            else
+            {
+                Process current = Process.GetCurrentProcess();
+                foreach (Process process in Process.GetProcessesByName(current.ProcessName))
+                {
+                    if (process.Id != current.Id)
+                    {
+                        Win32Helper.SendMessageString(process.MainWindowHandle, "BloodReg");
+                        break;
+                    }
+                }
+                Current.Shutdown();
+            }
+        }
+
+        private void OnExit(object sender, ExitEventArgs e)
+        {
+            _host.StopAsync().Wait();
+            _host.Dispose();
+        }
+
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("我们很抱歉，当前应用程序遇到一些问题...\n " + e.Exception.Message);
+            e.Handled = true;
+        }
+    }
+}
