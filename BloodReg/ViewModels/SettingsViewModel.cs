@@ -1,8 +1,10 @@
 ﻿using BloodReg.Helpers;
 using BloodReg.Models;
+using BloodReg.Views.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System.Windows;
 using System.Windows.Media;
@@ -19,6 +21,7 @@ namespace BloodReg.ViewModels
         private readonly ISqlSugarClient db;
         private readonly ISnackbarService snackbarService;
         private readonly IContentDialogService contentDialogService;
+        private readonly IServiceProvider serviceProvider;
 
         [ObservableProperty]
         private int _currentApplicationThemeIndex = Utils.GetCurrentApplicationThemeIndex(SettingsHelper.GetConfig("Theme"));
@@ -53,11 +56,12 @@ namespace BloodReg.ViewModels
         private string _dataCount = "正在计算";
         #endregion FileOccupancy
 
-        public SettingsViewModel(ISqlSugarClient _db, ISnackbarService _snackbarService, IContentDialogService _contentDialogService)
+        public SettingsViewModel(ISqlSugarClient _db, ISnackbarService _snackbarService, IContentDialogService _contentDialogService, IServiceProvider _serviceProvider)
         {
             db = _db;
             snackbarService = _snackbarService;
             contentDialogService = _contentDialogService;
+            serviceProvider = _serviceProvider;
         }
 
         partial void OnCurrentApplicationThemeIndexChanged(int value)
@@ -178,37 +182,59 @@ namespace BloodReg.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnCleanDatabaseButtonClick()
+        private async Task OnDatabase(string parameter)
         {
-            System.Media.SystemSounds.Asterisk.Play();
-            ContentDialogResult result = await contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+            if (parameter == "ImportDatabase")
             {
-                Title = "重置数据库",
-                Content = "您的所有数据将被删除，且无法恢复，您确定要继续吗?",
-                PrimaryButtonText = "是",
-                CloseButtonText = "否",
-            });
-            if (result == ContentDialogResult.Primary)
+                ContentDialogResult result = await contentDialogService.ShowAsync(serviceProvider.GetRequiredService<DatabaseImportDialog>(), CancellationToken.None);
+                if (result == ContentDialogResult.Primary)
+                {
+                    System.Media.SystemSounds.Asterisk.Play();
+                    snackbarService.Show("导入", "数据导入成功", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Info16), TimeSpan.FromSeconds(3));
+                    WeakReferenceMessenger.Default.Send("refresh");
+                }
+            }
+            else if (parameter == "ExportDatabase")
             {
-                if (db.DbMaintenance.IsAnyTable("Student"))
+                ContentDialogResult result = await contentDialogService.ShowAsync(serviceProvider.GetRequiredService<DatabaseExportDialog>(), CancellationToken.None);
+                if (result == ContentDialogResult.Primary)
                 {
-                    db.DbMaintenance.TruncateTable<Student>();
+                    System.Media.SystemSounds.Asterisk.Play();
+                    snackbarService.Show("导出", "数据导出成功", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Info16), TimeSpan.FromSeconds(3));
                 }
-                if (db.DbMaintenance.IsAnyTable("Teacher"))
+            }
+            else if (parameter == "CleanDatabase")
+            {
+                System.Media.SystemSounds.Asterisk.Play();
+                ContentDialogResult result = await contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
                 {
-                    db.DbMaintenance.TruncateTable<Teacher>();
-                }
-                if (db.DbMaintenance.IsAnyTable("InternationalStudent"))
+                    Title = "重置数据库",
+                    Content = "所有数据将被删除，且无法恢复，您确定要继续吗?",
+                    PrimaryButtonText = "是",
+                    CloseButtonText = "否",
+                });
+                if (result == ContentDialogResult.Primary)
                 {
-                    db.DbMaintenance.TruncateTable<InternationalStudent>();
+                    if (db.DbMaintenance.IsAnyTable("Student"))
+                    {
+                        db.DbMaintenance.TruncateTable<Student>();
+                    }
+                    if (db.DbMaintenance.IsAnyTable("Teacher"))
+                    {
+                        db.DbMaintenance.TruncateTable<Teacher>();
+                    }
+                    if (db.DbMaintenance.IsAnyTable("InternationalStudent"))
+                    {
+                        db.DbMaintenance.TruncateTable<InternationalStudent>();
+                    }
+                    if (db.DbMaintenance.IsAnyTable("OutsidePeople"))
+                    {
+                        db.DbMaintenance.TruncateTable<OutsidePeople>();
+                    }
+                    DataCount = "数据库文件已占用 " + await FileOccupancy.GetFileSizeAsync(Environment.CurrentDirectory + @"\database.db");
+                    WeakReferenceMessenger.Default.Send("refresh");
+                    snackbarService.Show("重置成功", "所有数据已清除。", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Info16), TimeSpan.FromSeconds(3));
                 }
-                if (db.DbMaintenance.IsAnyTable("OutsidePeople"))
-                {
-                    db.DbMaintenance.TruncateTable<OutsidePeople>();
-                }
-                DataCount = "数据库文件已占用 " + await FileOccupancy.GetFileSizeAsync(Environment.CurrentDirectory + @"\database.db");
-                WeakReferenceMessenger.Default.Send("refresh");
-                snackbarService.Show("重置成功", "所有数据已清除。", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Info16), TimeSpan.FromSeconds(3));
             }
         }
 

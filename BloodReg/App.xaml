@@ -13,9 +13,7 @@
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="/Styles/AppResources.xaml" />
-                <ResourceDictionary Source="/Styles/MyButton.xaml" />
                 <ResourceDictionary Source="/Styles/SelectableTextBlock.xaml" />
-                <ResourceDictionary Source="/Styles/MyButton.xaml" />
                 <ResourceDictionary Source="/Styles/MyScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

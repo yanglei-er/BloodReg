@@ -23,7 +23,6 @@
     <Page.Resources>
         <converters:BoolToAppearanceConverter x:Key="BoolToAppearanceConverter" />
         <converters:StringToDonationVolumeConverter x:Key="StringToDonationVolumeConverter" />
-        <Style BasedOn="{StaticResource MyButtonStyle}" TargetType="ui:Button" />
     </Page.Resources>
 
     <Grid Margin="16">
@@ -46,19 +45,15 @@
                     Margin="8,8,8,0"
                     ws:StylusTouchDevice.Simulate="True"
                     PanningMode="Both">
-                    <StackPanel Margin="0,0,12,0">
+                    <ws:StackPanel Margin="0,0,12,0" Spacing="8">
                         <ui:TextBlock FontSize="32" Text="姓名：" />
                         <ui:TextBox
                             x:Name="NameBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="NameBox_PreviewKeyDown"
                             Text="{Binding ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="献血量：" />
+                        <ui:TextBlock FontSize="32" Text="献血量：" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -67,7 +62,6 @@
                             <ui:TextBox
                                 x:Name="DonationVolumeBox"
                                 Grid.Column="0"
-                                Margin="0,8,0,0"
                                 extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                                 BorderThickness="0"
                                 FontSize="24"
@@ -80,66 +74,46 @@
                                 FontSize="32"
                                 Text="ml" />
                         </Grid>
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="工号：" />
+                        <ui:TextBlock FontSize="32" Text="工号：" />
                         <ui:TextBox
                             x:Name="EmployeeIDBox"
-                            Margin="0,8,0,0"
                             extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="EmployeeIDBox_PreviewKeyDown"
                             Text="{Binding ViewModel.EmployeeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="身份证号：" />
+                        <ui:TextBlock FontSize="32" Text="身份证号：" />
                         <ui:TextBox
                             x:Name="IDNumberBox"
-                            Margin="0,8,0,0"
                             extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="IDNumberBox_PreviewKeyDown"
                             Text="{Binding ViewModel.IDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="手机号：" />
+                        <ui:TextBlock FontSize="32" Text="手机号：" />
                         <ui:TextBox
                             x:Name="PhoneNumberBox"
-                            Margin="0,8,0,0"
                             extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="PhoneNumberBox_PreviewKeyDown"
                             Text="{Binding ViewModel.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="银行卡号：" />
+                        <ui:TextBlock FontSize="32" Text="银行卡号：" />
                         <ui:TextBox
                             x:Name="AccountNumberBox"
-                            Margin="0,8,0,0"
                             extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="AccountNumberBox_PreviewKeyDown"
                             Text="{Binding ViewModel.AccountNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="开户支行：" />
+                        <ui:TextBlock FontSize="32" Text="开户支行：" />
                         <ui:TextBox
                             x:Name="AccountBankBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="AccountBankBox_PreviewKeyDown"
                             Text="{Binding ViewModel.AccountBank, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel>
+                    </ws:StackPanel>
                 </ws:ScrollViewer>
                 <StackPanel
                     Grid.Row="1"
@@ -158,9 +132,9 @@
                         Margin="0,12,0,8"
                         HorizontalAlignment="Stretch"
                         Appearance="Primary"
-                        Click="AddButton_Click"
-                        Content="添加"
-                        FontSize="32" />
+                        Click="AddButton_Click">
+                        <ui:TextBlock FontSize="32" Text="添加" />
+                    </ui:Button>
                 </StackPanel>
             </Grid>
         </Border>

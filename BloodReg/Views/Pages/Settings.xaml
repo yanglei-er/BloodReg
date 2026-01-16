@@ -342,14 +342,29 @@
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="谨慎操作" />
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <ws:StackPanel
+                                    Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    Spacing="12">
                                     <ui:Button
                                         Width="108"
                                         BorderThickness="0"
-                                        Command="{Binding ViewModel.CleanDatabaseButtonClickCommand}"
+                                        Command="{Binding ViewModel.DatabaseCommand}"
+                                        CommandParameter="ImportDatabase"
+                                        Content="导入数据" />
+                                    <ui:Button
+                                        Width="108"
+                                        BorderThickness="0"
+                                        Command="{Binding ViewModel.DatabaseCommand}"
+                                        CommandParameter="ExportDatabase"
+                                        Content="导出数据" />
+                                    <ui:Button
+                                        Width="108"
+                                        BorderThickness="0"
+                                        Command="{Binding ViewModel.DatabaseCommand}"
                                         CommandParameter="CleanDatabase"
                                         Content="重置数据库" />
-                                </StackPanel>
+                                </ws:StackPanel>
                             </Grid>
                         </ui:Card>
                     </StackPanel>

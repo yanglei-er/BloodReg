@@ -23,7 +23,6 @@
     <Page.Resources>
         <converters:BoolToAppearanceConverter x:Key="BoolToAppearanceConverter" />
         <converters:StringToDonationVolumeConverter x:Key="StringToDonationVolumeConverter" />
-        <Style BasedOn="{StaticResource MyButtonStyle}" TargetType="ui:Button" />
     </Page.Resources>
 
     <Grid Margin="16">
@@ -46,20 +45,16 @@
                     Margin="8,8,8,0"
                     ws:StylusTouchDevice.Simulate="True"
                     PanningMode="Both">
-                    <StackPanel Margin="0,0,12,0">
+                    <ws:StackPanel Margin="0,0,12,0" Spacing="8">
                         <ui:TextBlock FontSize="32" Text="姓名：" />
                         <ui:TextBox
                             x:Name="NameBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="NameBox_PreviewKeyDown"
                             Text="{Binding ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="WrapWithOverflow" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="献血量：" />
+                        <ui:TextBlock FontSize="32" Text="献血量：" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -68,7 +63,6 @@
                             <ui:TextBox
                                 x:Name="DonationVolumeBox"
                                 Grid.Column="0"
-                                Margin="0,8,0,0"
                                 extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                                 BorderThickness="0"
                                 FontSize="24"
@@ -81,120 +75,80 @@
                                 FontSize="32"
                                 Text="ml" />
                         </Grid>
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="中文名：" />
+                        <ui:TextBlock FontSize="32" Text="中文名：" />
                         <ui:TextBox
                             x:Name="ChineseNameBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="ChineseNameBox_PreviewKeyDown"
                             Text="{Binding ViewModel.ChineseName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="学号：" />
+                        <ui:TextBlock FontSize="32" Text="学号：" />
                         <ui:TextBox
                             x:Name="StudentIdBox"
-                            Margin="0,8,0,0"
                             extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="StudentIdBox_PreviewKeyDown"
                             Text="{Binding ViewModel.StudentId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="手机号：" />
+                        <ui:TextBlock FontSize="32" Text="手机号：" />
                         <ui:TextBox
                             x:Name="PhoneNumberBox"
-                            Margin="0,8,0,0"
                             extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="PhoneNumberBox_PreviewKeyDown"
                             Text="{Binding ViewModel.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="银行卡号：" />
+                        <ui:TextBlock FontSize="32" Text="银行卡号：" />
                         <ui:TextBox
                             x:Name="AccountNumberBox"
-                            Margin="0,8,0,0"
                             extensions:TextBoxAttachedProperties.IsOnlyNumber="True"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="AccountNumberBox_PreviewKeyDown"
                             Text="{Binding ViewModel.AccountNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="开户支行：" />
+                        <ui:TextBlock FontSize="32" Text="开户支行：" />
                         <ui:TextBox
                             x:Name="AccountBankBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="AccountBankBox_PreviewKeyDown"
                             Text="{Binding ViewModel.AccountBank, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="护照号：" />
+                        <ui:TextBlock FontSize="32" Text="护照号：" />
                         <ui:TextBox
                             x:Name="PassportNumberBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="PassportNumberBox_PreviewKeyDown"
                             Text="{Binding ViewModel.PassportNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="国籍：" />
+                        <ui:TextBlock FontSize="32" Text="国籍：" />
                         <ui:TextBox
                             x:Name="NationalityBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="NationalityBox_PreviewKeyDown"
                             Text="{Binding ViewModel.Nationality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="生日：" />
+                        <ui:TextBlock FontSize="32" Text="生日：" />
                         <ui:TextBox
                             x:Name="BirthdayBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="BirthdayBox_PreviewKeyDown"
                             Text="{Binding ViewModel.Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="初次入境时间：" />
+                        <ui:TextBlock FontSize="32" Text="初次入境时间：" />
                         <ui:TextBox
                             x:Name="FirstEntryDateBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="FirstEntryDateBox_PreviewKeyDown"
                             Text="{Binding ViewModel.FirstEntryDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <ui:TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="32"
-                            Text="微信号：" />
+                        <ui:TextBlock FontSize="32" Text="微信号：" />
                         <ui:TextBox
                             x:Name="WeixinIDBox"
-                            Margin="0,8,0,0"
                             BorderThickness="0"
                             FontSize="24"
                             PreviewKeyDown="WeixinIDBox_PreviewKeyDown"
                             Text="{Binding ViewModel.WeixinID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel>
+                    </ws:StackPanel>
                 </ws:ScrollViewer>
                 <StackPanel
                     Grid.Row="1"
@@ -213,9 +167,9 @@
                         Margin="0,12,0,8"
                         HorizontalAlignment="Stretch"
                         Appearance="Primary"
-                        Click="AddButton_Click"
-                        Content="添加"
-                        FontSize="32" />
+                        Click="AddButton_Click">
+                        <ui:TextBlock FontSize="32" Text="添加" />
+                    </ui:Button>
                 </StackPanel>
             </Grid>
         </Border>

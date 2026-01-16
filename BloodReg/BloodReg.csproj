@@ -15,14 +15,15 @@
 	<ApplicationIcon>applicationIcon.ico</ApplicationIcon>
 	<Description>BloodReg</Description>
 	<Copyright>Copyright © 2026 赵杨磊.All Rights Reserved.</Copyright>
-	<AssemblyVersion>1.0.0</AssemblyVersion>
-	<FileVersion>1.0.0</FileVersion>
+	<AssemblyVersion>1.1.0</AssemblyVersion>
+	<FileVersion>1.1.0</FileVersion>
    </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="EleCho.WpfSuite" Version="0.10.20" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
+    <PackageReference Include="MiniExcel" Version="1.42.0" />
     <PackageReference Include="SqlSugarCoreNoDrive.Aot" Version="5.1.4.186" />
     <PackageReference Include="WPF-UI" Version="4.2.0" />
     <PackageReference Include="WPF-UI.DependencyInjection" Version="4.2.0" />

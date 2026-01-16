@@ -32,12 +32,12 @@ namespace BloodReg
                     services.AddHostedService<ApplicationHostService>();
 
                     //Database
-                    services.AddScoped<ISqlSugarClient>(s =>
+                    services.AddSingleton<ISqlSugarClient>(s =>
                     {
                         //Scoped用SqlSugarClient 
-                        SqlSugarClient sqlSugar = new(new ConnectionConfig()
+                        SqlSugarScope sqlSugar = new(new ConnectionConfig()
                         {
-                            DbType = SqlSugar.DbType.Sqlite,
+                            DbType = DbType.Sqlite,
                             ConnectionString = "DataSource=database.db",
                             IsAutoCloseConnection = true,
                         });
@@ -64,20 +64,13 @@ namespace BloodReg
                     services.AddSingleton<ViewModels.OutsidePeopleViewModel>();
                     services.AddSingleton<Views.Pages.Settings>();
                     services.AddSingleton<ViewModels.SettingsViewModel>();
+
+                    services.AddTransient<Views.Dialogs.DatabaseImportDialog>();
+                    services.AddTransient<ViewModels.DatabaseImportDialogViewModel>();
+                    services.AddTransient<Views.Dialogs.DatabaseExportDialog>();
+                    services.AddTransient<ViewModels.DatabaseExportDialogViewModel>();
                 }
             ).Build();
-
-        public static T? GetService<T>()
-        where T : class
-        {
-            return _host.Services.GetService(typeof(T)) as T;
-        }
-
-        public static T GetRequiredService<T>()
-        where T : class
-        {
-            return _host.Services.GetRequiredService<T>();
-        }
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
