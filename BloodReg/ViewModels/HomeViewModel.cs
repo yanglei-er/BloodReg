@@ -8,11 +8,11 @@ namespace BloodReg.ViewModels
 {
     public partial class HomeViewModel : ObservableObject, INavigationAware
     {
-        private readonly INavigationService _navigationService;
+        private readonly INavigationService navigationService;
 
-        public HomeViewModel(INavigationService navigationService)
+        public HomeViewModel(INavigationService _navigationService)
         {
-            _navigationService = navigationService;
+            navigationService = _navigationService;
         }
 
         [RelayCommand]
@@ -20,19 +20,19 @@ namespace BloodReg.ViewModels
         {
             if (parameter == "学生")
             {
-                _navigationService.Navigate(typeof(Views.Pages.Student));
+                navigationService.Navigate(typeof(Views.Pages.Student));
             }
             else if (parameter == "教职工")
             {
-                _navigationService.Navigate(typeof(Views.Pages.Teacher));
+                navigationService.Navigate(typeof(Views.Pages.Teacher));
             }
             else if (parameter == "留学生")
             {
-                _navigationService.Navigate(typeof(Views.Pages.InternationalStudent));
+                navigationService.Navigate(typeof(Views.Pages.InternationalStudent));
             }
             else if (parameter == "校外人员")
             {
-                _navigationService.Navigate(typeof(Views.Pages.OutsidePeople));
+                navigationService.Navigate(typeof(Views.Pages.OutsidePeople));
             }
         }
 

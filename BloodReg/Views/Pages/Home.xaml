@@ -16,12 +16,7 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2.8*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Grid RowDefinitions="1.7*, *">
         <Border Grid.Row="0" CornerRadius="8,0,0,0">
             <Border.Background>
                 <ImageBrush
@@ -31,7 +26,7 @@
             </Border.Background>
             <Grid>
                 <StackPanel
-                    Margin="48,0"
+                    Margin="48,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center">
                     <ui:TextBlock
@@ -79,24 +74,21 @@
                     Text="Created by Zhao Yanglei" />
             </Grid>
         </Border>
-        <Grid Grid.Row="1" Margin="16,16,16,8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid
+            Grid.Row="1"
+            Margin="8"
+            ColumnDefinitions="*,*"
+            RowDefinitions="*,*">
             <ui:CardAction
+                Grid.Row="0"
                 Grid.Column="0"
-                Margin="0,0,4,0"
+                Margin="0,0,4,4"
                 Padding="0"
                 VerticalAlignment="Stretch"
                 Command="{Binding ViewModel.CardClickCommand, Mode=OneWay}"
                 CommandParameter="学生"
                 IsChevronVisible="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Grid ColumnDefinitions="Auto, *">
                     <ui:Image
                         Width="80"
                         Height="80"
@@ -114,18 +106,15 @@
                 </Grid>
             </ui:CardAction>
             <ui:CardAction
+                Grid.Row="0"
                 Grid.Column="1"
-                Margin="8,0,4,0"
+                Margin="4,0,0,4"
                 Padding="0"
                 VerticalAlignment="Stretch"
                 Command="{Binding ViewModel.CardClickCommand, Mode=OneWay}"
                 CommandParameter="教职工"
                 IsChevronVisible="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Grid ColumnDefinitions="Auto, *">
                     <ui:Image
                         Width="80"
                         Height="80"
@@ -142,25 +131,16 @@
                         Text="教职工" />
                 </Grid>
             </ui:CardAction>
-        </Grid>
-        <Grid Grid.Row="2" Margin="16,8,16,16">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <ui:CardAction
+                Grid.Row="1"
                 Grid.Column="0"
-                Margin="0,0,4,0"
+                Margin="0,4,4,0"
                 Padding="0"
                 VerticalAlignment="Stretch"
                 Command="{Binding ViewModel.CardClickCommand, Mode=OneWay}"
                 CommandParameter="留学生"
                 IsChevronVisible="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Grid ColumnDefinitions="Auto, *">
                     <ui:Image
                         Width="70"
                         Height="70"
@@ -178,18 +158,15 @@
                 </Grid>
             </ui:CardAction>
             <ui:CardAction
-                Grid.Column="2"
-                Margin="8,0,0,0"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="4,4,0,0"
                 Padding="0"
                 VerticalAlignment="Stretch"
                 Command="{Binding ViewModel.CardClickCommand, Mode=OneWay}"
                 CommandParameter="校外人员"
                 IsChevronVisible="False">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Grid ColumnDefinitions="Auto, *">
                     <ui:Image
                         Width="74"
                         Height="74"

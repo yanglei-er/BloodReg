@@ -86,11 +86,17 @@ namespace BloodReg.ViewModels
         [ObservableProperty]
         private bool _isBottombarEnabled = false;
 
-        public TeacherViewModel(ISqlSugarClient _db, ISnackbarService _snackbarService, IContentDialogService contentDialogService)
+        public TeacherViewModel(ISqlSugarClient _db, ISnackbarService _snackbarService, IContentDialogService _contentDialogService)
         {
             db = _db;
             snackbarService = _snackbarService;
-            this.contentDialogService = contentDialogService;
+            contentDialogService = _contentDialogService;
+            WeakReferenceMessenger.Default.Register<string>(this, (r, m) => { needRefresh = true; });
+            LoadData();
+        }
+
+        private async void LoadData()
+        {
             if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "database.db")))
             {
                 db.DbMaintenance.CreateDatabase();
@@ -99,13 +105,11 @@ namespace BloodReg.ViewModels
             {
                 db.CodeFirst.InitTables<Teacher>();
             }
-            RefreshAsync();
-            PagerAsync();
-
-            WeakReferenceMessenger.Default.Register<string>(this, (r, m) => { needRefresh = true; });
+            await RefreshAsync();
+            await PagerAsync();
         }
 
-        private async void RefreshAsync()
+        private async Task RefreshAsync()
         {
             TotalCount = await db.Queryable<Teacher>().CountAsync();
             if (TotalCount == 0)
@@ -127,7 +131,7 @@ namespace BloodReg.ViewModels
             if (CurrentPage != TotalPageCount) { IsPageDownEnabled = true; }
         }
 
-        private async void PagerAsync()
+        private async Task PagerAsync()
         {
             DataGridItems = (await db.Queryable<Teacher>().ToDataTablePageAsync(CurrentPage, PageCountList[DisplayIndex])).DefaultView;
 
@@ -173,11 +177,11 @@ namespace BloodReg.ViewModels
             }
         }
 
-        partial void OnDisplayIndexChanged(int value)
+        async partial void OnDisplayIndexChanged(int value)
         {
             SettingsHelper.SetConfig("TeacherDisplayIndex", value.ToString());
-            RefreshAsync();
-            if (CurrentPage == 1) PagerAsync();
+            await RefreshAsync();
+            if (CurrentPage == 1) await PagerAsync();
             CurrentPage = 1;
         }
 
@@ -202,10 +206,10 @@ namespace BloodReg.ViewModels
             }
         }
 
-        partial void OnCurrentPageChanged(int value)
+        async partial void OnCurrentPageChanged(int value)
         {
             TargetPage = value;
-            PagerAsync();
+            await PagerAsync();
             if (CurrentPage == 1) IsPageUpEnabled = false;
             else if (CurrentPage == TotalPageCount) IsPageDownEnabled = false;
         }
@@ -291,8 +295,8 @@ namespace BloodReg.ViewModels
             }
             else
             {
-                RefreshAsync();
-                PagerAsync();
+                await RefreshAsync();
+                await PagerAsync();
             }
         }
 
@@ -344,8 +348,8 @@ namespace BloodReg.ViewModels
             db.Insertable(new Teacher() { Name = Name, EmployeeID = EmployeeID, DonationVolume = DonationVolume, AccountNumber = AccountNumber, AccountBank = AccountBank, PhoneNumber = PhoneNumber, Clerk = Clerk }).ExecuteCommand();
             System.Media.SystemSounds.Asterisk.Play();
             snackbarService.Show("添加成功", $"教职工【{Name}】已添加到数据库中。", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Info16), TimeSpan.FromSeconds(3));
-            RefreshAsync();
-            PagerAsync();
+            await RefreshAsync();
+            await PagerAsync();
 
             Name = string.Empty;
             EmployeeID = string.Empty;
@@ -391,21 +395,21 @@ namespace BloodReg.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 db.Deleteable<Teacher>().Where(it => it.EmployeeID == (string)selectedItem[1]).ExecuteCommand();
-                RefreshAsync();
-                PagerAsync();
+                await RefreshAsync();
+                await PagerAsync();
             }
         }
 
-        public Task OnNavigatedToAsync()
+        public async Task OnNavigatedToAsync()
         {
             Utils.ChangeAppTitle("献血信息登记系统 - 教职工录入");
             if(needRefresh)
             {
-                RefreshAsync();
-                PagerAsync();
+                await RefreshAsync();
+                await PagerAsync();
                 needRefresh = false;
             }
-            return Task.CompletedTask;
+            return;
         }
 
         public Task OnNavigatedFromAsync()

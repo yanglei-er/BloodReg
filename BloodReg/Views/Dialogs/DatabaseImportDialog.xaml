@@ -17,14 +17,14 @@
     ScrollViewer.CanContentScroll="False"
     mc:Ignorable="d">
 
-    <ws:Grid Background="{DynamicResource ControlFillColorDefaultBrush}" RowDefinitions="*,*,*">
+    <Grid Background="{DynamicResource ControlFillColorDefaultBrush}" RowDefinitions="*,*,*">
         <Border
             Grid.Row="1"
             Margin="128,0,128,0"
             Background="{DynamicResource ApplicationBackgroundBrush}"
             CornerRadius="4">
             <Grid>
-                <ws:Grid Margin="32,24,32,24" RowDefinitions="Auto, *">
+                <Grid Margin="32,24,32,24" RowDefinitions="Auto, *">
                     <DockPanel ws:Grid.Row="0">
                         <ws:StackPanel HorizontalAlignment="Left" Spacing="4">
                             <ui:TextBlock
@@ -49,7 +49,7 @@
                             MouseOverBackground="{DynamicResource PaletteRedBrush}"
                             PressedBackground="{StaticResource RemoveButtonIsPressedBackground}" />
                     </DockPanel>
-                    <ws:Grid
+                    <Grid
                         Grid.Row="1"
                         Margin="0,16,0,0"
                         ColumnDefinitions="*,*">
@@ -81,8 +81,8 @@
                                 FontSize="36"
                                 Text="从数据库(db)" />
                         </ui:CardAction>
-                    </ws:Grid>
-                </ws:Grid>
+                    </Grid>
+                </Grid>
                 <Grid
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
@@ -109,5 +109,5 @@
                 </Grid>
             </Grid>
         </Border>
-    </ws:Grid>
+    </Grid>
 </ui:ContentDialog>

@@ -25,21 +25,13 @@
         <converters:StringToDonationVolumeConverter x:Key="StringToDonationVolumeConverter" />
     </Page.Resources>
 
-    <Grid Margin="16">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2.5*" />
-        </Grid.ColumnDefinitions>
+    <Grid Margin="16" ColumnDefinitions="*, 2.5*">
         <TextBox Name="XuNiBox" Width="0" />
         <Border
             Grid.Column="0"
             Background="{DynamicResource ControlFillColorDefaultBrush}"
             CornerRadius="4">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Grid RowDefinitions="*, Auto">
                 <ws:ScrollViewer
                     Grid.Row="0"
                     Margin="8,8,8,0"
@@ -55,11 +47,7 @@
                             Text="{Binding ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="WrapWithOverflow" />
                         <ui:TextBlock FontSize="32" Text="献血量：" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid ColumnDefinitions="*, Auto">
                             <ui:TextBox
                                 x:Name="DonationVolumeBox"
                                 Grid.Column="0"
@@ -178,12 +166,7 @@
             Margin="12,0,0,0"
             Background="{DynamicResource ControlFillColorDefaultBrush}"
             CornerRadius="4">
-            <Grid Margin="8,8,8,6">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Grid Margin="8,8,8,6" RowDefinitions="Auto, *, Auto">
                 <Grid Grid.Row="0">
                     <ui:TextBox
                         Grid.Column="0"
@@ -330,12 +313,10 @@
                             Text="什么都没有 ┑(￣Д ￣)┍" />
                     </StackPanel>
                 </Grid>
-                <Grid Grid.Row="2" Margin="0,12,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Grid
+                    Grid.Row="2"
+                    Margin="0,12,0,0"
+                    ColumnDefinitions="*, Auto, *">
                     <StackPanel
                         Grid.Column="0"
                         HorizontalAlignment="Left"

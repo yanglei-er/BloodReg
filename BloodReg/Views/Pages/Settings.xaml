@@ -80,11 +80,7 @@
                     Expanded="ColorExpander_Expanded"
                     Icon="{ui:SymbolIcon Color24}">
                     <ui:CardExpander.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid ColumnDefinitions="*, Auto">
                             <StackPanel Grid.Column="0">
                                 <ui:TextBlock FontSize="16" Text="主题色" />
                                 <ui:TextBlock
@@ -102,12 +98,7 @@
                             </StackPanel>
                         </Grid>
                     </ui:CardExpander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    <Grid ColumnDefinitions="*, Auto, *">
                         <StackPanel Grid.Column="0" Margin="0,16,0,0">
                             <ui:TextBlock
                                 Margin="24,0,0,0"
@@ -137,11 +128,10 @@
                             Grid.Column="1"
                             Width="1"
                             Background="{DynamicResource ControlElevationBorderBrush}" />
-                        <Grid Grid.Column="2" Margin="26,16,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                        <Grid
+                            Grid.Column="2"
+                            Margin="26,16,0,0"
+                            RowDefinitions="Auto, *">
                             <ui:TextBlock
                                 Grid.Row="0"
                                 FontSize="16"
@@ -149,17 +139,9 @@
                             <Grid
                                 Grid.Row="1"
                                 Width="200"
-                                Height="200">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
+                                Height="200"
+                                ColumnDefinitions="*, *"
+                                RowDefinitions="*, *, *, *">
                                 <Border
                                     Grid.ColumnSpan="2"
                                     Height="50"
@@ -277,11 +259,7 @@
                     Icon="{ui:SymbolIcon DataPie24}"
                     IsExpanded="{Binding ViewModel.IsFileOccupancyExpanded, Mode=TwoWay}">
                     <ui:CardExpander.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid ColumnDefinitions="*, Auto">
                             <StackPanel Grid.Column="0">
                                 <ui:TextBlock FontSize="16" Text="存储空间" />
                                 <ui:TextBlock
@@ -306,12 +284,7 @@
                             BorderThickness="0"
                             Click="DatabaseButton_Click"
                             CornerRadius="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                            <Grid ColumnDefinitions="*, Auto, Auto">
                                 <TextBlock
                                     Grid.Column="0"
                                     Margin="8,0,0,0"
@@ -331,11 +304,7 @@
                             </Grid>
                         </ui:Button>
                         <ui:Card Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}" BorderThickness="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                            <Grid ColumnDefinitions="*, Auto">
                                 <ui:TextBlock
                                     Grid.Column="0"
                                     Margin="8,0,0,0"
@@ -382,11 +351,7 @@
                             Source="pack://application:,,,/Assets/applicationIcon.png" />
                     </ui:CardExpander.Icon>
                     <ui:CardExpander.Header>
-                        <Grid Margin="-4,0,12,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                        <Grid Margin="-4,0,12,0" ColumnDefinitions="Auto, *">
                             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                 <TextBox
                                     FontSize="16"
@@ -408,11 +373,7 @@
                         </Grid>
                     </ui:CardExpander.Header>
                     <StackPanel>
-                        <Grid Margin="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                        <Grid Margin="16" ColumnDefinitions="Auto, *">
                             <ui:Anchor
                                 Grid.Column="0"
                                 Margin="-10,0,0,0"
@@ -503,11 +464,7 @@
                             CornerRadius="0"
                             NavigateUri="https://github.com/yanglei-er/BloodReg"
                             ToolTipService.ToolTip="https://github.com/yanglei-er/BloodReg">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                            <Grid ColumnDefinitions="*, Auto">
                                 <TextBlock Grid.Column="0" Text="Source Code (Github)" />
                                 <ui:SymbolIcon Grid.Column="1" Symbol="Link24" />
                             </Grid>
@@ -521,11 +478,7 @@
                             CornerRadius="0"
                             NavigateUri="https://github.com/yanglei-er/BloodReg/issues"
                             ToolTipService.ToolTip="https://github.com/yanglei-er/BloodReg/issues">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                            <Grid ColumnDefinitions="*, Auto">
                                 <TextBlock Grid.Column="0" Text="Bug 提交 (Github)" />
                                 <ui:SymbolIcon Grid.Column="1" Symbol="Link24" />
                             </Grid>
@@ -540,11 +493,7 @@
                             MouseRightButtonUp="CopyMailAddress"
                             NavigateUri="mailto:zhao.yanglei@foxmail.com"
                             ToolTipService.ToolTip="zhao.yanglei@foxmail.com">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                            <Grid ColumnDefinitions="*, Auto">
                                 <TextBlock Grid.Column="0" Text="联系我 (右键复制邮箱地址)" />
                                 <ui:SymbolIcon Grid.Column="1" Symbol="Link24" />
                             </Grid>

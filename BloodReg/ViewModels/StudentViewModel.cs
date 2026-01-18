@@ -88,6 +88,12 @@ namespace BloodReg.ViewModels
             db = _db;
             snackbarService = _snackbarService;
             this.contentDialogService = contentDialogService;
+            WeakReferenceMessenger.Default.Register<string>(this, (r, m) => { needRefresh = true; });
+            LoadData();
+        }
+
+        private async void LoadData()
+        {
             if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "database.db")))
             {
                 db.DbMaintenance.CreateDatabase();
@@ -96,13 +102,11 @@ namespace BloodReg.ViewModels
             {
                 db.CodeFirst.InitTables<Student>();
             }
-            RefreshAsync();
-            PagerAsync();
-
-            WeakReferenceMessenger.Default.Register<string>(this, (r, m) => { needRefresh = true; });
+            await RefreshAsync();
+            await PagerAsync();
         }
 
-        private async void RefreshAsync()
+        private async Task RefreshAsync()
         {
             TotalCount = await db.Queryable<Student>().CountAsync();
             if (TotalCount == 0)
@@ -124,7 +128,7 @@ namespace BloodReg.ViewModels
             if (CurrentPage != TotalPageCount) { IsPageDownEnabled = true; }
         }
 
-        private async void PagerAsync()
+        private async Task PagerAsync()
         {
             DataGridItems = (await db.Queryable<Student>().ToDataTablePageAsync(CurrentPage, PageCountList[DisplayIndex])).DefaultView;
 
@@ -170,11 +174,14 @@ namespace BloodReg.ViewModels
             }
         }
 
-        partial void OnDisplayIndexChanged(int value)
+        async partial void OnDisplayIndexChanged(int value)
         {
             SettingsHelper.SetConfig("StudentDisplayIndex", value.ToString());
-            RefreshAsync();
-            if (CurrentPage == 1) PagerAsync();
+            await RefreshAsync();
+            if (CurrentPage == 1) 
+            { 
+                await PagerAsync(); 
+            }
             CurrentPage = 1;
         }
 
@@ -199,10 +206,10 @@ namespace BloodReg.ViewModels
             }
         }
 
-        partial void OnCurrentPageChanged(int value)
+        async partial void OnCurrentPageChanged(int value)
         {
             TargetPage = value;
-            PagerAsync();
+            await PagerAsync();
             if (CurrentPage == 1) IsPageUpEnabled = false;
             else if (CurrentPage == TotalPageCount) IsPageDownEnabled = false;
         }
@@ -288,8 +295,8 @@ namespace BloodReg.ViewModels
             }
             else
             {
-                RefreshAsync();
-                PagerAsync();
+                await RefreshAsync();
+                await PagerAsync();
             }
         }
 
@@ -327,8 +334,8 @@ namespace BloodReg.ViewModels
                 db.Insertable(new Student() { Name = Name, StudentId = StudentID, DonationVolume = DonationVolume, Clerk = Clerk }).ExecuteCommand();
                 System.Media.SystemSounds.Asterisk.Play();
                 snackbarService.Show("添加成功", $"学生【{Name}】已添加到数据库中。", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Info16), TimeSpan.FromSeconds(3));
-                RefreshAsync();
-                PagerAsync();
+                await RefreshAsync();
+                await PagerAsync();
 
                 Student? studentToRemove = TodoList.FirstOrDefault(s => s.Name == Name);
                 if (studentToRemove != null)
@@ -381,8 +388,8 @@ namespace BloodReg.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 db.Deleteable<Student>().Where(it => it.StudentId == (string)selectedItem[1]).ExecuteCommand();
-                RefreshAsync();
-                PagerAsync();
+                await RefreshAsync();
+                await PagerAsync();
             }
         }
 
@@ -400,16 +407,16 @@ namespace BloodReg.ViewModels
             Clerk = TodoList[value].Clerk;
         }
 
-        public Task OnNavigatedToAsync()
+        public async Task OnNavigatedToAsync()
         {
             Utils.ChangeAppTitle("献血信息登记系统 - 学生录入");
             if (needRefresh)
             {
-                RefreshAsync();
-                PagerAsync();
+                await RefreshAsync();
+                await PagerAsync();
                 needRefresh = false;
             }
-            return Task.CompletedTask;
+            return;
         }
 
         public Task OnNavigatedFromAsync()

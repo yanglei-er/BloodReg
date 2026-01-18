@@ -1,5 +1,4 @@
-﻿using BloodReg.Models;
-using BloodReg.ViewModels;
+﻿using BloodReg.ViewModels;
 using System.Data;
 using System.Windows.Input;
 using Wpf.Ui.Abstractions.Controls;
@@ -50,11 +49,11 @@ namespace BloodReg.Views.Pages
             }
         }
 
-        private void StudentIdBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private async void StudentIdBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                _ = ViewModel.AddAsync();
+                await ViewModel.AddAsync();
                 CheckEmpty();
             }
             else if (e.Key == Key.Escape)
@@ -63,11 +62,11 @@ namespace BloodReg.Views.Pages
             }
         }
 
-        private void ClerkBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private async void ClerkBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                _ = ViewModel.AddAsync();
+                await ViewModel.AddAsync();
                 CheckEmpty();
             }
             else if (e.Key == Key.Escape)
@@ -130,9 +129,9 @@ namespace BloodReg.Views.Pages
             }
         }
 
-        private void AddButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void AddButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _ = ViewModel.AddAsync();
+            await ViewModel.AddAsync();
             CheckEmpty();
         }
 
